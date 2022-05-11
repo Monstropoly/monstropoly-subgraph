@@ -1,4 +1,4 @@
-specVersion: 0.0.1
+specVersion: 0.0.2
 schema:
   file: ./schema.graphql
 dataSources:
@@ -8,40 +8,70 @@ dataSources:
     source:
       address: "0xA97b63EEb5a25E650C67838DA62d1D186AFa868A"
       abi: Factory
+      startBlock: 17355190
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - AdminChanged
-        - Approval
-        - ApprovalForAll
-        - BeaconUpgraded
+        # - AdminChanged
+        # - Approval
+        # - ApprovalForAll
+        # - BeaconUpgraded
         - Mint
-        - Paused
+        # - Paused
         - Transfer
-        - Unpaused
-        - Upgraded
+        # - Unpaused
+        # - Upgraded
       abis:
         - name: Factory
           file: ./abis/Factory.json
       eventHandlers:
-        - event: AdminChanged(address,address)
-          handler: handleAdminChanged
-        - event: Approval(indexed address,indexed address,indexed uint256)
-          handler: handleApproval
-        - event: ApprovalForAll(indexed address,indexed address,bool)
-          handler: handleApprovalForAll
-        - event: BeaconUpgraded(indexed address)
-          handler: handleBeaconUpgraded
+        # - event: AdminChanged(address,address)
+        #   handler: handleAdminChanged
+        # - event: Approval(indexed address,indexed address,indexed uint256)
+        #   handler: handleApproval
+        # - event: ApprovalForAll(indexed address,indexed address,bool)
+        #   handler: handleApprovalForAll
+        # - event: BeaconUpgraded(indexed address)
+        #   handler: handleBeaconUpgraded
         - event: Mint(indexed address,indexed address,indexed uint256,uint8,uint8,string)
           handler: handleMint
-        - event: Paused(address)
-          handler: handlePaused
+        # - event: Paused(address)
+        #   handler: handlePaused
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
-        - event: Unpaused(address)
-          handler: handleUnpaused
-        - event: Upgraded(indexed address)
-          handler: handleUpgraded
-      file: ./src/mapping.ts
+        # - event: Unpaused(address)
+        #   handler: handleUnpaused
+        # - event: Upgraded(indexed address)
+        #   handler: handleUpgraded
+      file: ./src/factory.ts
+  - kind: ethereum
+    name: Marketplace
+    network: chapel
+    source:
+      address: "0x760a1197691f0faba449fd1fe246117262587bfd"
+      abi: Marketplace
+      startBlock: 19010341
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - AskNew
+        - AskUpdate
+        - AskCancel
+        - Trade
+      abis:
+        - name: Marketplace
+          file: ./abis/Marketplace.json
+      eventHandlers:
+        - event: AskNew(indexed address,indexed address,indexed uint256,uint256,address)
+          handler: handleAskNew
+        - event: AskUpdate(indexed address,indexed address,indexed uint256,uint256)
+          handler: handleAskUpdate
+        - event: AskCancel(indexed address,indexed address,indexed uint256)
+          handler: handleAskCancel
+        - event: Trade(indexed address,indexed uint256,indexed address,address,uint256,uint256,bool)
+          handler: handleTrade
+      file: ./src/marketplace.ts

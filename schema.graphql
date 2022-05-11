@@ -1,6 +1,33 @@
-type ExampleEntity @entity {
-  id: ID!
-  count: BigInt!
-  previousAdmin: Bytes! # address
-  newAdmin: Bytes! # address
+type Monster @entity {
+  id: ID! #contractAddress#tokenId
+  tokenId: BigInt!
+  owner: Holder!
+  rarity: Int!
+  breedUses: Int!
+  genetic: String!
+  status: String! #HOLDED/ON_SALE/ON_LEND_GAME/ON_LEND_BREED/BURNED
+}
+
+type Holder @entity {
+  id: ID! #walletAddress
+  monsters: [Monster!]
+}
+
+type Ask @entity {
+  id: ID! #collection#tokenId
+  collection: String!
+  tokenId: BigInt!
+  seller: String!
+  buyer: String!
+  price: BigInt!
+  netPrice: BigInt!
+  token: String!
+  active: Boolean!
+  cancelled: Boolean!
+  matched: Boolean!
+  withBNB: Boolean!
+  newTxHash: String!
+  tradeTxHash: String
+  cancelTxHash: String
+  updateTxsHash: [String!]
 }
