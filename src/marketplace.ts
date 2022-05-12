@@ -99,7 +99,7 @@ export function handleTrade(event: Trade): void {
 function createAsk(id: string): void {
     let ask = Ask.load(id)
 
-    if (ask !== null) {
+    if (ask == null) {
         ask = new Ask(id)
         ask.collection = ADDRESS_ZERO_STRING
         ask.tokenId = ZERO_BI
